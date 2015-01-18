@@ -1,8 +1,10 @@
-# mustache.clj - Logic-less {{mustache}} templates for Clojure
+# mustache.clj - Logic-less {{mustache}} templates for Clojure with nested lookup
 
-[mustache.clj](https://github.com/shenfeng/mustache.clj)
+This is a fork of [mustache.clj](https://github.com/shenfeng/mustache.clj)
 is a (yet another) implementation of the [Mustache](http://mustache.github.com/)
 template system for Clojure.
+
+The purpose of the fork is to add lookups in nested maps.
 
 By preprocessing template into a tree like data structure, It's quite fast.
 

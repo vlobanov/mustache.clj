@@ -1,4 +1,4 @@
-package me.shenfeng.mustache;
+package me.vlobanov.mustache;
 
 public class ParserException extends Exception {
 

@@ -1,5 +1,5 @@
-(ns me.shenfeng.mustache-test
-  (:use me.shenfeng.mustache
+(ns me.vlobanov.mustache-test
+  (:use me.vlobanov.mustache
         clostache.parser
         clojure.test))
 

@@ -1,10 +1,10 @@
-package me.shenfeng.mustache;
+package me.vlobanov.mustache;
 
 import java.util.List;
 import java.util.Map;
 
 import clojure.lang.Keyword;
-import me.shenfeng.mustache.NestedKey;
+import me.vlobanov.mustache.NestedKey;
 
 public class Context {
     private final Object data;

@@ -1,5 +1,5 @@
-(ns me.shenfeng.perf-bench
-  (:use me.shenfeng.mustache
+(ns me.vlobanov.perf-bench
+  (:use me.vlobanov.mustache
         clojure.test
         stencil.core)
   (:require [stencil.loader]))

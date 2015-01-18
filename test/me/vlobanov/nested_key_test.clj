@@ -1,8 +1,8 @@
-(ns me.shenfeng.nested-key-test
-  (:use me.shenfeng.mustache
+(ns me.vlobanov.nested-key-test
+  (:use me.vlobanov.mustache
         clostache.parser
         clojure.test)
-  (:import [me.shenfeng.mustache NestedKey]))
+  (:import [me.vlobanov.mustache NestedKey]))
 
 (deftest getting-value
   (let [nk (NestedKey. "hello.my.friend")

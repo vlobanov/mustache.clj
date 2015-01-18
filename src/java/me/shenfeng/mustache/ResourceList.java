@@ -1,4 +1,4 @@
-package me.shenfeng.mustache;
+package me.vlobanov.mustache;
 
 import java.io.File;
 import java.io.IOException;

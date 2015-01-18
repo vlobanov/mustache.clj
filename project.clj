@@ -1,7 +1,7 @@
-(defproject me.shenfeng/mustache "1.2-SNAPSHOT"
+(defproject me.vlobanov/mustache "1.3-SNAPSHOT"
   :min-lein-version "2.0.0"
-  :description "Mustache write in java, for clojure"
-  :dependencies [[org.clojure/clojure "1.4.0"]]
+  :description "Mustache write in java, for clojure. Fork of me.shenfeng/mustache.clj"
+  :dependencies [[org.clojure/clojure "1.6.0"]]
   :warn-on-reflection true
   :java-source-paths ["src/java"]
   :jar-exclusions [#".*java$"]

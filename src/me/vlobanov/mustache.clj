@@ -1,7 +1,7 @@
-(ns me.shenfeng.mustache
+(ns me.vlobanov.mustache
   (:require [clojure.string :as str]
             [clojure.java.io :as io])
-  (:import [me.shenfeng.mustache ResourceList Mustache Context]
+  (:import [me.vlobanov.mustache ResourceList Mustache Context]
            java.io.File
            clojure.lang.Keyword))
 

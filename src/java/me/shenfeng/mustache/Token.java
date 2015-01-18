@@ -1,12 +1,12 @@
-package me.shenfeng.mustache;
+package me.vlobanov.mustache;
 
-import static me.shenfeng.mustache.Context.isArray;
-import static me.shenfeng.mustache.Context.isFalse;
+import static me.vlobanov.mustache.Context.isArray;
+import static me.vlobanov.mustache.Context.isFalse;
 
 import java.util.List;
 import java.util.Map;
 
-import me.shenfeng.mustache.NestedKey;
+import me.vlobanov.mustache.NestedKey;
 
 import clojure.lang.Keyword;
 
