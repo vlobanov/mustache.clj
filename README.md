@@ -6,7 +6,7 @@ with nested lookups (see example)
 ### Installation
 
 ```clj
-[me.vlobanov/mustache "1.3"]
+[me.vlobanov/mustache "1.3-SNAPSHOT"]
 ```
 
 Example:
