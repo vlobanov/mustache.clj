@@ -6,6 +6,8 @@ import static me.shenfeng.mustache.Context.isFalse;
 import java.util.List;
 import java.util.Map;
 
+import me.shenfeng.mustache.NestedKey;
+
 import clojure.lang.Keyword;
 
 public class Token {
@@ -25,7 +27,12 @@ public class Token {
         this.type = type;
         if (type != TEXT) {
             value = value.trim();
-            this.value = Keyword.intern(value);
+
+            if(NestedKey.isNestedKey(value)) {
+                this.value = new NestedKey(value);
+            } else {
+                this.value = Keyword.intern(value);
+            }
         } else {
             // remove space between tags, this is not in Mustache spec
             // It works for html

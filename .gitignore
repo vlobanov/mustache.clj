@@ -8,3 +8,4 @@ target/
 pom.xml
 .lein-deps-sum
 .lein-failures
+/.lein-*

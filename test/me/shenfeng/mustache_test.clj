@@ -44,6 +44,16 @@
     (is (= "Hello World"
            (to-html t {:name "World"} {:partial "{{name}}"})))))
 
+
+(deftest test-nested-variables
+  (let [t (mk-template "{{ hello.great.world }}")]
+    (is (= "Hi!" (to-html t {:hello {:great {:world "Hi!"}}})))))
+
+(deftest test-nested-variables-true
+  (let [t (mk-template "{{?data.t}}true{{/data.t}}{{^data.t}}false{{/data.t}}")]
+    (is (= "true" (to-html t {:data {:t true}})))))
+
+
 (deftest test-gen-tmpls-from-resouces
   (gen-tmpls-from-resources "test" [".tpl"])
   (is (test2 {}))                       ; test2 is generate
@@ -57,14 +67,21 @@
   (is (test-test2)))
 
 (deftemplate template (slurp "test/tpl.tpl"))
+(deftemplate nested-template (slurp "test/nested_tpl.tpl"))
 
 (def data {:title "mustache.clj - Logic-less {{mustache}} templates for Clojure"
            :list (map (fn [id]
                         {:id id
                          :name (str "name" id)}) (range 1 4))})
 
+(def nested-data {:data {:en data}})
+
+
 (dotimes [i 100000]                     ; warm up
   (template data))
+
+(dotimes [i 100000]                     ; warm up
+  (nested-template nested-data))
 
 ;; (deftemplates {:name_one "{{name}}"
 ;;                :name_two "Hello {{name}}, {{>name_one}}"})
@@ -82,8 +99,25 @@
  (dotimes [i 100000]
    (template data)))
 
-;; (println "\nResult: \n"
-;;          (to-html template data))
+(println "\nResult: \n"
+         (template data))
 
 
-;; (deftemplate hello-world "{{name}}")
+
+(println "")
+(println "")
+(println "Nested perf test: Render 100k Times\n"
+         (slurp "test/nested_tpl.tpl")
+         "With data\n " nested-data
+         "Take: \n"
+         "Output: " (nested-template nested-data))
+(time
+ (dotimes [i 100000]
+   (nested-template nested-data)))
+
+(println "\nResult: \n"
+         (nested-template nested-data))
+
+
+
+(deftemplate hello-world "{{name}}")

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import clojure.lang.Keyword;
+import me.shenfeng.mustache.NestedKey;
 
 public class Context {
     private final Object data;
@@ -42,19 +43,37 @@ public class Context {
         return false;
     }
 
+    public Object nestedLookup(Map m, Object key, Object keyNotFound) {
+        if(key instanceof NestedKey) {
+            return ((NestedKey)key).getIn(m, keyNotFound);
+        } else {
+            if(m.containsKey(key)) {
+                return m.get(key);
+            } else {
+                return keyNotFound;
+            }
+        }
+    }
+
     public Object lookup(Object key) {
         if (key.equals(ME)) {
             return data;
         }
 
+        Object keyNotFound = new Object();
+        Object val;
+
         Context context = this;
         while (context != null) {
             Object d = context.data;
+
             if (d instanceof Map) {
                 @SuppressWarnings("rawtypes")
+
                 Map m = (Map)d;
-                if(m.containsKey(key)) {
-                   return m.get(key);
+                val = nestedLookup(m, key, keyNotFound);
+                if(val != keyNotFound) {
+                    return val;
                 }
             }
             context = context.parent;
