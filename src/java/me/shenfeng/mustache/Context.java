@@ -44,13 +44,17 @@ public class Context {
     }
 
     public Object nestedLookup(Map m, Object key, Object keyNotFound) {
-        if(key instanceof NestedKey) {
-            return ((NestedKey)key).getIn(m, keyNotFound);
+        if(key instanceof ParameterizedKey) {
+            return ((ParameterizedKey)key).getIn(m, keyNotFound);
         } else {
-            if(m.containsKey(key)) {
-                return m.get(key);
+            if(key instanceof NestedKey) {
+                return ((NestedKey)key).getIn(m, keyNotFound);
             } else {
-                return keyNotFound;
+                if(m.containsKey(key)) {
+                    return m.get(key);
+                } else {
+                    return keyNotFound;
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ import static me.vlobanov.mustache.Context.isFalse;
 import java.util.List;
 import java.util.Map;
 
-import me.vlobanov.mustache.NestedKey;
+import me.vlobanov.mustache.KeyFactory;
 
 import clojure.lang.Keyword;
 
@@ -23,16 +23,11 @@ public class Token {
     final Object value;
     List<Token> tokens;
 
-    public Token(char type, String value) {
+    public Token(char type, String value) throws ParserException {
         this.type = type;
         if (type != TEXT) {
             value = value.trim();
-
-            if(NestedKey.isNestedKey(value)) {
-                this.value = new NestedKey(value);
-            } else {
-                this.value = Keyword.intern(value);
-            }
+            this.value = KeyFactory.createKey(value);
         } else {
             // remove space between tags, this is not in Mustache spec
             // It works for html
