@@ -15,6 +15,7 @@ public class Mustache {
     public static final String BEGIN = "{{";
     public static final String END = "}}";
 
+    String fileName;
     List<Token> tokens;
 
     public static final ConcurrentMap<String, Mustache> CACHE = new ConcurrentHashMap<String, Mustache>();
@@ -37,12 +38,14 @@ public class Mustache {
                 break;
             case '/':
                 if (sections.isEmpty()) {
-                    throw new ParserException("Unopened section: " + token.value);
+                    throw new ParserException("Unopened section: " + token.getDescription(), token);
                 }
                 section = sections.removeLast();
                 if (!section.value.equals(token.value)) {
-                    throw new ParserException("Unclosed " + token.value + "; in section"
-                            + section.value);
+                    throw new ParserException("Unclosed: " + token.getDescription()
+                                                           + "; in section"
+                                                           + section.value,
+                                                           token);
                 }
 
                 if (sections.size() > 0) {
@@ -63,17 +66,22 @@ public class Mustache {
     }
 
     public static Mustache preprocess(String template) throws ParserException {
+        return preprocess(template, "<unknown>");
+    }
+
+    public static Mustache preprocess(String template, String fileName) throws ParserException {
         Mustache m = CACHE.get(template);
         if (m == null) {
-            m = new Mustache(template);
+            m = new Mustache(template, fileName);
             CACHE.put(template, m);
         }
         return m;
     }
 
-    private Mustache(String template) throws ParserException {
+    private Mustache(String template, String fileName) throws ParserException {
         List<Token> tokens = new LinkedList<Token>();
         Scanner scanner = new Scanner(template);
+        this.fileName = fileName;
         while (!scanner.eos()) {
             String value = scanner.scanUtil(BEGIN);
             if (value != null)
@@ -83,11 +91,11 @@ public class Mustache {
             switch (type) {
             case '{': // not escape
                 value = scanner.scanUtil("}}}");
-                tokens.add(new Token(type, value));
+                tokens.add(new Token(type, value, scanner.getCurrentLine(), fileName));
                 break;
             default:
                 value = scanner.scanUtil(END);
-                tokens.add(new Token(type, value));
+                tokens.add(new Token(type, value, scanner.getCurrentLine(), fileName));
             }
 
         }

@@ -22,9 +22,17 @@ public class Token {
     final char type;
     final Object value;
     List<Token> tokens;
+    int line;
+    String fileName;
 
     public Token(char type, String value) throws ParserException {
+        this(type, value, 0, "<unknown>");
+    }
+
+    public Token(char type, String value, int line, String fileName) throws ParserException {
         this.type = type;
+        this.line = line;
+        this.fileName = fileName;
         if (type != TEXT) {
             value = value.trim();
             this.value = KeyFactory.createKey(value);
@@ -33,6 +41,15 @@ public class Token {
             // It works for html
             // value = value.replaceAll("(\\w)>\\s+?<(\\w|/)", "$1><$2");
             this.value = value;
+        }
+    }
+
+    public String getDescription() {
+        String v = value.toString();
+        if(this.line > 0) {
+            return v + " in " + this.fileName + ":" + Integer.toString(this.line);
+        } else {
+            return v;
         }
     }
 

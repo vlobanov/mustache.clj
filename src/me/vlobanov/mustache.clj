@@ -33,7 +33,7 @@
                      (file-seq dir)))
                (.getName dir))))
 
-(defn- tmpls-from-rerouces [folder extentions]
+(defn- tmpls-from-resouces [folder extentions]
   (get-tmpls (ResourceList/getResources folder extentions) folder))
 
 (defn- fn-name [n]         ; app/search_result => app-search-result
@@ -42,8 +42,11 @@
 ;; ---------------------- public functions ------------------------------
 
 ;;; from string to Mustache
-(defn mk-template [template]
-  (Mustache/preprocess template))
+(defn mk-template
+  ([template filename]
+    (Mustache/preprocess template filename))
+  ([template]
+    (Mustache/preprocess template)))
 
 (defn to-html
   ([^Mustache template data]
@@ -64,7 +67,7 @@
 
 (defmacro gen-tmpls-from-resources [folder extentions & [tran]]
   (.clear Mustache/CACHE)               ; clear paritials cache
-  (let [tmpls (tmpls-from-rerouces folder extentions)
+  (let [tmpls (tmpls-from-resouces folder extentions)
         defs (map (fn [[name template]]
                     `(deftemplate ~(fn-name name) ~template ~tmpls ~tran))
                   tmpls)]
