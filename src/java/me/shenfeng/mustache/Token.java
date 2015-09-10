@@ -53,6 +53,10 @@ public class Token {
         }
     }
 
+    public int getLine() {
+        return this.line;
+    }
+
     public static String renderTokens(List<Token> tokens, Context c, Map<Keyword, String> partials)
             throws ParserException {
         StringBuilder sb = new StringBuilder();

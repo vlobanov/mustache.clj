@@ -11,6 +11,14 @@ public class ParserException extends Exception {
         super(msg);
     }
 
+    public int getLineNumber() {
+      if(this.token != null) {
+        return this.token.getLine();
+      } else {
+        return 0;
+      }
+    }
+
     public ParserException(String msg, Token token) {
         super(msg);
         this.token = token;
