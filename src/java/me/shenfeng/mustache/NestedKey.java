@@ -51,4 +51,8 @@ public class NestedKey {
     public static boolean isNestedKey(String value) {
         return (!(value.equals(".")) && value.indexOf(SEPARATOR) >= 0);
     }
+
+    public String toString() {
+        return strValue;
+    }
 }

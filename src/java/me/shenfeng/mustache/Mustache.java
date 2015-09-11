@@ -60,7 +60,7 @@ public class Mustache {
             }
         }
         if (sections.size() > 0) {
-            throw new ParserException("Unclosed section: " + sections.peek().value);
+            throw new ParserException("Unclosed section: " + sections.peek().getDescription());
         }
         return output;
     }

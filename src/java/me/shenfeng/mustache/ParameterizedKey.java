@@ -14,9 +14,12 @@ public class ParameterizedKey {
     NestedKey key;
     NestedKey[] argsKeys;
 
+    String value;
+
     public ParameterizedKey(String value) throws ParserException {
         // very very silly arguments parsing
         String[] openParensParts = value.split("\\(");
+        this.value = value;
         if(openParensParts.length != 2) {
             throw new ParserException("Expected to find exactly 1 open parenthesis in " + value);
         }
@@ -51,6 +54,10 @@ public class ParameterizedKey {
         }
 
         return String.format((String)keyValue, argsResults);
+    }
+
+    public String toString() {
+        return value;
     }
 
     public static boolean isParameterizedKey(String value) {
