@@ -39,14 +39,23 @@
 (defn- fn-name [n]         ; app/search_result => app-search-result
   (symbol (str/replace (str (.sym ^Keyword n)) #"_|/" "-")))
 
+(defn- remove-comments
+  "A comment is denoted by <!--{ comment }-->
+   so that html syntax highliter understands it too"
+  [template]
+  (str/replace template
+               #"\<\!\-\-\{.+?\}\-\-\>"
+               ""))
+
 ;; ---------------------- public functions ------------------------------
 
 ;;; from string to Mustache
 (defn mk-template
   ([template filename]
-    (Mustache/preprocess template filename))
+    (Mustache/preprocess (remove-comments template)
+                         filename))
   ([template]
-    (Mustache/preprocess template)))
+    (Mustache/preprocess (remove-comments template))))
 
 (defn to-html
   ([^Mustache template data]
