@@ -44,8 +44,7 @@ public class Mustache {
                 if (!section.value.equals(token.value)) {
                     throw new ParserException("Unclosed: " + token.getDescription()
                                                            + "; in section"
-                                                           + section.value,
-                                                           token);
+                                                           + section.value, token);
                 }
 
                 if (sections.size() > 0) {
@@ -60,7 +59,8 @@ public class Mustache {
             }
         }
         if (sections.size() > 0) {
-            throw new ParserException("Unclosed section: " + sections.peek().getDescription());
+            Token lastSection = sections.peek();
+            throw new ParserException("Unclosed section: " + lastSection.getDescription(), lastSection);
         }
         return output;
     }
